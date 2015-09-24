@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  work_datetime: 2015-09-17 12:30:43
+  user_id: 1
+  work_type: MyString
+  work_type1: MyString
+  work_type2: MyString
+  work_place: MyString
+  work_person: MyString
+  work_person_phone: MyString
+  work_description: MyString
+  work_demand: MyString
+  work_benin_datetime: 2015-09-17 12:30:43
+  work_end_datetime: 2015-09-17 12:30:43
+  work_result: MyString
+  work_status: MyString
+
+two:
+  work_datetime: 2015-09-17 12:30:43
+  user_id: 1
+  work_type: MyString
+  work_type1: MyString
+  work_type2: MyString
+  work_place: MyString
+  work_person: MyString
+  work_person_phone: MyString
+  work_description: MyString
+  work_demand: MyString
+  work_benin_datetime: 2015-09-17 12:30:43
+  work_end_datetime: 2015-09-17 12:30:43
+  work_result: MyString
+  work_status: MyString

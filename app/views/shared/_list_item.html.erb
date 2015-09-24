@@ -1,0 +1,5 @@
+<% if params[:action] == action %>
+  <%= link_to name, {:controller => controller,:action => action}, class: "list-group-item list-group-item-success" %>
+<% else %>
+  <%= link_to name, {:controller => controller,:action => action}, class: "list-group-item" %>
+<% end %>

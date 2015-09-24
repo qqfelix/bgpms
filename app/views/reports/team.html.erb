@@ -1,0 +1,102 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">按组统计</h3>
+  </div>
+  <div class="panel-body">
+      <div class="col-sm-6">
+          <table class="table table-bordered">
+              <thead>
+                  <th>
+                      组别
+                  </th>
+                  <th>
+                      待处理
+                  </th>
+                  <th>
+                      处理中
+                  </th>
+                  <th>
+                      已完成
+                  </th>
+                  <th>
+                      合计
+                  </th>
+              </thead>
+              <tbody>
+                  <% @teams.each do |team| %>
+                    <tr>
+                        <td>
+                            <%= team[0] %>
+                        </td>
+                        <td>
+                            <%= team[1][0] %>
+                        </td>
+                        <td>
+                            <%= team[1][1] %>
+                        </td>
+                        <td>
+                            <%= team[1][2] %>
+                        </td>
+                        <td>
+                            <%= team[1][3] %>
+                        </td>
+                    </tr>
+                  <% end %>
+              </tbody>
+          </table>
+      </div>
+      <div class="col-sm-6">
+          <div id="container">
+
+          </div>
+      </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+
+$(function () {
+		Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function(color) {
+    return {
+        radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
+        stops: [
+            [0, color],
+            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+        ]
+    };
+});
+    $('#container').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: '按组统计问题总数'
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    formatter: function() {
+                        return '<b>'+ this.point.name +'</b>: '+ this.percentage.toFixed(2) +' %';
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '问题总数',
+            data: <%= raw @teams.map { |e| [e[0],e[1][3]]  } %>
+        }]
+    });
+});
+</script>

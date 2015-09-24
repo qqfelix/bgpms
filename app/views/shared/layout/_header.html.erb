@@ -1,0 +1,34 @@
+<header>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-target="#navbar" data-toggle="collapse" type="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">故障问题管理系统</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#"></a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <% if logged_in? %>
+                    <li><a href="/works/sheets_unsolved"><%= current_user.name %><span class="badge"><%= sheets_unsolved.size %></span></a></li>
+                    <li><%= link_to "退出", {:controller => 'users', :action => 'logout'} %></li>
+                    <% else %>
+                    <li><%= link_to "注册", {:controller => 'users', :action => 'signup'} %></li>
+                    <li><%= link_to "登录", {:controller => 'users', :action => 'signin'} %></li>
+                    <% end %>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

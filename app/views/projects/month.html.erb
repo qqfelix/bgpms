@@ -1,0 +1,72 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">月报管理</h3>
+  </div>
+  <div class="panel-body">
+      <div class="form-group">
+          <!-- <%= link_to "查看本月工作内容", {:action => 'week_report_of_this_month'},:target => '_blank'  %> -->
+      </div>
+
+      <%= form_for :month_report, :url => {:action => 'month_create'} do |f| %>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="">工作内容</label>
+                <%= f.text_area :mr_content,:rows => 5, class: "form-control" %>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="">工作计划</label>
+                <%= f.text_area :mr_plan,:rows => 5, class: "form-control" %>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="">所属项目</label>
+                <%= f.select :project_id,current_user.projects.map {|p| [p.p_name, p.id]},{}, {class: "form-control"} %>
+            </div>
+            <div class="form-group">
+                <%= f.submit "提交", class: "btn btn-primary btn-block" %>
+            </div>
+      </div>
+      <% end %>
+
+      <div class="col-sm-12">
+          <table class="table">
+            <thead>
+                <th>
+                    工作内容
+                </th>
+                <th>
+                    工作计划
+                </th>
+                <th>
+                    所属项目
+                </th>
+                <th>
+                    操作
+                </th>
+            </thead>
+            <tbody>
+                <% @month_reports.each do |mr| %>
+                  <tr>
+                      <td>
+                          <%= mr.mr_content %>
+                      </td>
+                      <td>
+                          <%= mr.mr_plan %>
+                      </td>
+                      <td>
+                          <%= mr.project.p_name %>
+                      </td>
+                      <td>
+                          <%= link_to "删除", {:action => 'month_destroy',:id => mr.id}, class: "btn btn-danger",:data => {confirm:'是否确认删除！'} %>
+                      </td>
+                  </tr>
+                <% end %>
+            </tbody>
+          </table>
+          <%= will_paginate @month_reports,:previous_label => "上一页",:next_label => "下一页" %>
+      </div>
+  </div>
+</div>

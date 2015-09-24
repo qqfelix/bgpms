@@ -1,0 +1,5 @@
+<% if  params[:controller] == controller  %>
+    <div aria-labelledby="heading<%= id %>" class="panel-collapse collapse in" id="collapse<%= id %>" role="tabpanel">
+<% else %>
+    <div aria-labelledby="heading<%= id %>" class="panel-collapse collapse" id="collapse<%= id %>" role="tabpanel">
+<% end %>

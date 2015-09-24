@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  wr_content: MyText
+  wr_plan: MyText
+  project_id: 1
+  user_id: 1
+  month_report_id: 1
+
+two:
+  wr_content: MyText
+  wr_plan: MyText
+  project_id: 1
+  user_id: 1
+  month_report_id: 1

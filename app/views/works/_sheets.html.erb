@@ -1,0 +1,56 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">我的问题</h3>
+  </div>
+  <div class="panel-body">
+      <table class="table">
+          <thead>
+              <th>
+                  日期
+              </th>
+              <th>
+                  受理人
+              </th>
+              <th>
+                  发生地点
+              </th>
+              <th>
+                  工作类别
+              </th>
+              <th>
+                  处理结果
+              </th>
+              <th>
+                  详细信息
+              </th>
+          </thead>
+          <tbody>
+              <% @work_sheets.each do |sheet| %>
+                <tr>
+                    <td>
+                        <%= sheet.work_datetime.strftime("%y-%m-%d") %>
+                    </td>
+                    <td>
+                        <%= sheet.username %>
+                    </td>
+                    <td>
+                        <%= sheet.work_place %>
+                    </td>
+                    <td>
+                        <%= sheet.work_type %>
+                    </td>
+                    <td>
+                        <%= sheet.work_status %>
+                    </td>
+                    <td>
+                        <%= link_to "点击进入", {:action => 'sheet_detail',:id => sheet.id } %>
+                        <%= link_to "生成周报", {:action => 'sheet_auto',:id => sheet.id } %>
+
+                    </td>
+                </tr>
+              <% end %>
+          </tbody>
+      </table>
+      <%= will_paginate @work_sheets,:previous_label => "上一页",:next_label => "下一页" %>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">报表下载</h3>
+  </div>
+  <div class="panel-body">
+      <h4>周报、月报下载</h4>
+      <div class="form-group">
+          <ol>
+              <li>
+                  <%= link_to "周报下载", {:action => 'week_download'} %>
+              </li>
+              <li>
+                  <%= link_to "月报下载", {:action => 'month_download'} %>
+              </li>
+          </ol>
+      </div>
+  </div>
+</div>

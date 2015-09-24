@@ -1,0 +1,23 @@
+<div class="panel panel-primary">
+    <div class="panel-heading" id="heading<%= id %>" role="tab">
+        <h4 class="panel-title">
+            <a aria-controls="collapse<%= id %>" aria-expanded="true" data-parent="#accordion" data-toggle="collapse" href="#collapse<%= id %>" role="button">
+                <%= title %>
+            </a>
+        </h4>
+    </div>
+
+    <%= render :partial => "shared/collapse_item", :locals => {:id => id, :controller => controller} %>
+    <div class="panel-body">
+        <div class="list-group">
+            <% items.each do |item| %>
+              <%= render :partial => "shared/list_item", :locals => {:name => item[:name],:controller => controller,:action => item[:action]} %>
+            <% end %>
+        </div>
+
+    </div>
+    </div>
+
+
+
+</div>

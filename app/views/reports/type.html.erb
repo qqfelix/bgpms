@@ -1,0 +1,69 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">按类别</h3>
+  </div>
+  <div class="panel-body">
+      <div class="col-sm-12">
+          <table class="table table-bordered">
+              <thead>
+                  <th>
+                      组别
+                  </th>
+                  <th>
+                      问题类别及总数
+                  </th>
+              </thead>
+              <tbody>
+                  <% Team.all.each do |team| %>
+                    <tr>
+                        <td>
+                            <%= team.name %>
+                        </td>
+                        <td>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>
+                                        主类别
+                                    </th>
+                                    <th>
+                                        明细
+                                    </th>
+                                </tr>
+                                <% team.work_one_types.each do |wot| %>
+                                 <tr>
+                                     <td>
+                                         <%= wot.name %>
+                                     </td>
+                                     <td>
+                                         <table class="table table-bordered">
+                                             <tr>
+                                                 <th>
+                                                     子类别
+                                                 </th>
+                                                 <th>
+                                                     明细
+                                                 </th>
+                                             </tr>
+                                             <% wot.work_two_types.each do |wtt| %>
+                                               <tr>
+                                                   <td>
+                                                       <%= wtt.name %>
+                                                   </td>
+                                                   <td>
+                                                       <%= wtt.work_sheets.size %>
+                                                   </td>
+                                               </tr>
+                                             <% end %>
+                                         </table>
+                                     </td>
+                                 </tr>
+                                <% end %>
+                            </table>
+                        </td>
+                    </tr>
+                  <% end %>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>

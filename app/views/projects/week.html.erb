@@ -1,0 +1,67 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">我的周报</h3>
+  </div>
+  <div class="panel-body">
+      <%= form_for :week_report,:url => {:action => 'week_create'} do |f| %>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="">工作内容</label>
+                <%= f.text_area :wr_content,:rows => 5, class: "form-control" %>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="">工作计划</label>
+                <%= f.text_area :wr_plan,:rows => 5, class: "form-control" %>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="">所属项目</label>
+                <%= f.select :project_id,current_user.projects.map {|p| [p.p_name, p.id]},{}, {class: "form-control"} %>
+
+            </div>
+            <div class="form-group">
+                <%= f.submit "提交", class: "btn btn-primary btn-block" %>
+            </div>
+        </div>
+      <% end %>
+
+      <table class="table">
+        <thead>
+            <th>
+                工作内容
+            </th>
+            <th>
+                工作计划
+            </th>
+            <th>
+                所属项目
+            </th>
+            <th>
+                操作
+            </th>
+        </thead>
+        <tbody>
+            <% @week_reports.each do |wr| %>
+              <tr>
+                  <td>
+                      <%= wr.wr_content %>
+                  </td>
+                  <td>
+                      <%= wr.wr_plan %>
+                  </td>
+                  <td>
+                      <%= wr.project.p_name %>
+                  </td>
+                  <td>
+                      <%= link_to "删除", {:action => 'week_destroy',:id => wr.id}, class: "btn btn-danger",:data => {confirm:'是否确认删除！'} %>
+                  </td>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>
+      <%= will_paginate @week_reports,:previous_label => "上一页",:next_label => "下一页" %>
+  </div>
+</div>

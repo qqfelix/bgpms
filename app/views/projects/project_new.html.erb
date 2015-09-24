@@ -1,0 +1,108 @@
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+
+    <h3 class="panel-title">新增项目</h3>
+  </div>
+  <div class="panel-body">
+      <%= link_to "<<返回", {:action => 'index'} %>
+      <%= form_for @project,:url => {:action => 'project_create'} do |f| %>
+
+      <div class="col-sm-6">
+          <div class="form-group">
+              <label for="">项目编号</label>
+              <%= f.text_field :p_no, class: "form-control" %>
+          </div>
+      </div>
+      <div class="col-sm-6">
+          <div class="form-group">
+              <label for="">项目级别</label>
+              <%= f.text_field :p_level, class: "form-control" %>
+          </div>
+      </div>
+      <div class="col-sm-6">
+          <div class="form-group">
+              <label for="">项目名称</label>
+              <%= f.text_field :p_name, class: "form-control" %>
+          </div>
+      </div>
+      <div class="col-sm-6">
+          <div class="form-group">
+              <label for="">项目负责人</label>
+              <%= f.select :p_author,option_groups_from_collection_for_select(Team.all,:users,:name,:id, :name,current_user.id),{}, class: "form-control" %>
+          </div>
+      </div>
+      <div class="col-sm-6">
+          <div class="form-group">
+              <label for="">开发商</label>
+              <%= f.text_field :p_owner, class: "form-control" %>
+          </div>
+      </div>
+      <div class="col-sm-6">
+          <div class="form-group">
+              <label for="">管理部门</label>
+              <%= f.text_field :p_dept, class: "form-control" %>
+          </div>
+      </div>
+      <div class="col-sm-12">
+          <div class="form-group">
+              <label for="">项目组成员</label>
+              <table class="table table-bordered">
+                  <thead>
+                      <th>
+                          小组
+                      </th>
+                      <th>
+                          成员
+                      </th>
+                  </thead>
+                  <tbody>
+                      <% Team.all.each do |team| %>
+                        <tr>
+                            <td class="col-sm-2">
+                                <%= team.name %>
+                            </td>
+                            <td>
+                                <% team.users.each do |user| %>
+                                    <label class="checkbox-inline">
+                                        <%= check_box_tag :user_ids, user.id, @project.users.include?(user) || user.id == current_user.id, :name => 'project[user_ids][]' %>
+                                        <%= user.name %>
+                                    </label>
+                                <% end %>
+                            </td>
+                        </tr>
+                      <% end %>
+                  </tbody>
+              </table>
+
+          </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="form-group">
+              <label for="">开始时间</label>
+              <%= f.date_select :p_begin_date, class: "form-control",:use_month_numbers => true %>
+          </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="form-group">
+              <label for="">结束时间</label>
+              <%= f.date_select :p_end_date, class: "form-control",:use_month_numbers => true%>
+          </div>
+      </div>
+      <div class="col-sm-4">
+          <div class="form-group">
+              <label for="">项目状态</label>
+               <%= f.text_field :p_status, class: "form-control" %>
+          </div>
+      </div>
+      <div class="col-sm-12">
+          <div class="form-group">
+              <label for="">描述</label>
+               <%= f.text_area :p_description,:rows => 5, class: "form-control" %>
+          </div>
+      </div>
+      <%= f.submit "提交", class: "btn btn-primary btn-block" %>
+
+      <% end %>
+  </div>
+</div>

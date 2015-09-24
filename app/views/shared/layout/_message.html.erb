@@ -1,0 +1,12 @@
+<script type="text/javascript">
+    toastr.options.positionClass = 'toast-top-center';
+    toastr.options.closeMethod = 'fadeOut';
+    toastr.options.showMethod = 'slideDown';
+    toastr.options.hideMethod = 'slideUp';
+    toastr.options.closeMethod = 'slideUp';
+    <% if flash[:notice] %>
+        toastr.success("<%= flash[:notice] %>");
+    <% elsif flash[:error] %>
+        toastr.error("<%= flash[:error] %>");
+    <% end %>
+</script>

@@ -1,0 +1,143 @@
+<%= link_to "<< 返回我的问题单", {:action => 'my_sheets'} %>
+
+<div class="panel panel-primary">
+    <!-- <%= form_for :work_sheet do |f| %> -->
+    <%= form_for :work_sheet,:url => {:action => :update,:id => @work_sheet.id }  do |f| %>
+    <div class="panel-body">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">详细信息</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">受理时间:</label>
+                        <%= f.datetime_select :work_datetime,:use_month_numbers => true%>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">受理人</label>
+                        <%= f.text_field :username, :value => @work_sheet.username,:readonly => 'readonly', :class => 'form-control' %>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">工作类别</label>
+                        <%= f.select :work_type,['抢修','维护','工程','其它'],{},{:readonly => 'readonly',:class => "form-control"} %>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">系统别</label>
+                        <!-- <%= f.select :work_type1,["ERP维护","OA维护","二冷轧维护","三热轧维护"],{},{:class => "form-control"} %> -->
+                        <%= f.select :work_type1,option_groups_from_collection_for_select(current_user.team.work_one_types,:work_two_types,:name,:id, :name,@work_sheet.work_type1),{}, class: "form-control",:readonly => 'readonly' %>
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">发生地点</label>
+                        <%= f.text_field :work_place, class: "form-control",:readonly => 'readonly' %>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">报修人</label>
+                        <%= f.text_field :work_person, class: "form-control",:readonly => 'readonly' %>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">保修电话</label>
+                        <%= f.text_field :work_person_phone, class: "form-control",:readonly => 'readonly' %>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="">现象描述</label>
+                        <%= f.text_area :work_description,:rows => 5, class: "form-control",:readonly => 'readonly' %>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="">用户要求</label>
+                        <%= f.text_area :work_demand,:rows => 5, class: "form-control",:readonly => 'readonly' %>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- <% end %> -->
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">处理情况</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">处理人</label>
+<!-- <%= f.select :user_id,User.all.map {|u| [u.name,u.id]},{}, class: "form-control" %> -->
+<!-- <%= f.select :user_id,options_from_collection_for_select(User.all, 'id', 'name',current_user.id),{}, class: "form-control" %> -->
+                        <%= f.select :user_id,option_groups_from_collection_for_select(Team.all,:users,:name,:id, :name,@work_sheet.user_id),{},:disabled=>'disabled', class: "form-control" %>
+
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">处理状态</label>
+                        <%= f.select :work_status,['已完成','待处理','处理中'],{}, class: "form-control" %>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">所属项目</label>
+                        <%= f.select :project_id,current_user.projects.map {|p| [p.p_name, p.id]},{}, {class: "form-control"} %>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">开始时间:</label>
+                        <%= f.datetime_select :work_benin_datetime,:use_month_numbers => true%>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">结束时间:</label>
+                        <%= f.datetime_select :work_end_datetime,:use_month_numbers => true%>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">工作类别</label>
+                        <%= f.select :work_type,['抢修','维护','工程','其它'],{},{:class => "form-control"} %>
+
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">系统别</label>
+                        <%= f.select :work_type1,option_groups_from_collection_for_select(current_user.team.work_one_types,:work_two_types,:name,:id, :name,@work_sheet.work_type1),{}, class: "form-control" %>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="">工作内容</label>
+                        <%= f.text_area :work_content,:rows => 5, class: "form-control" %>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <%= f.submit "提交",:class => 'btn btn-primary btn-block' %>
+                </div>
+            </div>
+
+        </div>
+        <% end %>
+
+    </div>
+
+</div>
