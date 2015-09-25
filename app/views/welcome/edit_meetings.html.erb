@@ -1,0 +1,209 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">会议室预定</h3>
+  </div>
+  <div class="panel-body">
+      <%= form_for @meeting,:url => {:action => 'update_meeting',:id => @meeting.id}, :html => { :class => 'form-horizontal' } do |f| %>
+
+
+<%
+  if current_user and current_user.name == '刘麟'
+    tag = false
+  else
+    tag = true
+  end
+%>
+    <table width="100%" class="table table-striped table-bordered table-hover">
+
+      <tr>
+        <td>
+          <%= @meeting.name %>
+        </td>
+        <td>
+          时间
+        </td>
+        <td>
+          是否预定
+        </td>
+        <td>
+          预订人
+        </td>
+      </tr>
+
+      <tr>
+        <td rowspan="2">
+          星期一
+        </td>
+        <td>
+          上午
+        </td>
+        <td>
+
+          <%= f.check_box :mon_am,disabled: (tag and @meeting.mon_am) %>
+
+        </td>
+        <td>
+          <%= f.text_field :mon_amdesc,readonly: (tag and @meeting.mon_am) %>
+
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          下午
+        </td>
+        <td>
+          <%= f.check_box :mon_pm ,disabled: (tag and @meeting.mon_pm) %>
+        </td>
+        <td>
+          <%= f.text_field :mon_pmdesc ,readonly: (tag and @meeting.mon_pm) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td rowspan="2">
+          星期二
+        </td>
+        <td>
+          上午
+        </td>
+        <td>
+          <%= f.check_box :tues_am ,disabled: (tag and @meeting.tues_am) %>
+        </td>
+        <td>
+          <%= f.text_field :tues_amdesc ,readonly: (tag and @meeting.tues_am) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          下午
+        </td>
+        <td>
+          <%= f.check_box :tues_pm ,disabled: (tag and @meeting.tues_pm) %>
+        </td>
+        <td>
+          <%= f.text_field :tues_pmdesc ,readonly: (tag and @meeting.tues_pm) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td rowspan="2">
+          星期三
+        </td>
+        <td>
+          上午
+        </td>
+        <td>
+          <%= f.check_box :wed_am ,disabled: (tag and @meeting.wed_am)%>
+        </td>
+        <td>
+          <%= f.text_field :wed_amdesc,readonly: (tag and @meeting.wed_am) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          下午
+        </td>
+        <td>
+          <%= f.check_box :wed_pm ,disabled: (tag and @meeting.wed_pm)%>
+        </td>
+        <td>
+          <%= f.text_field :wed_pmdesc ,readonly: (tag and @meeting.wed_pm)%>
+        </td>
+      </tr>
+
+      <tr>
+        <td rowspan="2">
+          星期四
+        </td>
+        <td>
+          上午
+        </td>
+        <td>
+          <%= f.check_box :thur_am ,disabled: (tag and @meeting.thur_am)%>
+        </td>
+        <td>
+          <%= f.text_field :thur_amdesc ,readonly: (tag and @meeting.thur_am)%>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          下午
+        </td>
+        <td>
+          <%= f.check_box :thur_pm ,disabled: (tag and @meeting.thur_pm)%>
+        </td>
+        <td>
+          <%= f.text_field :thur_pmdesc ,readonly: (tag and @meeting.thur_pm)%>
+        </td>
+      </tr>
+
+      <tr>
+        <td rowspan="2">
+          星期五
+        </td>
+        <td>
+          上午
+        </td>
+        <td>
+          <%= f.check_box :fri_am ,disabled: (tag and @meeting.fri_am)%>
+        </td>
+        <td>
+          <%= f.text_field :fri_amdesc,readonly: (tag and @meeting.fri_am) %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          下午
+        </td>
+        <td>
+          <%= f.check_box :fri_pm ,disabled: (tag and @meeting.fri_pm)%>
+        </td>
+        <td>
+          <%= f.text_field :fri_pmdesc ,readonly: (tag and @meeting.fri_pm)%>
+        </td>
+      </tr>
+
+
+
+    </table>
+
+  <div class="form-actions">
+
+    <input type="button" class="btn btn-primary" value="更新" onclick="check_yd()">
+    <%= link_to '返回',
+                {:action => 'index'} %>
+  </div>
+
+  <script type="text/javascript">
+    function check_yd () {
+
+      var is_ok = true
+
+      $("input:checkbox").each(function () {
+         if($(this).prop('checked') == true) {
+            mc = $(this).attr("id");
+            mt = $("#" + mc + "desc")
+            if (mt.val() == "") {
+              is_ok = false
+              return;
+            }
+         }
+      });
+
+      if (is_ok) {
+        $("#edit_meeting_<%= @meeting.id%>").submit();
+      } else {
+        alert("请输入预定人后重新提交！")
+      }
+
+    }
+  </script>
+<% end %>
+
+  </div>
+</div>

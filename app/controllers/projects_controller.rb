@@ -9,6 +9,8 @@ class ProjectsController < ApplicationController
 
   def project_create
     project = Project.new(project_params)
+    project.team = current_user.team
+    project.p_no = "#{pinyin(current_user.team.name)}-#{pinyin(project.p_status)}-#{DateTime.now.year}-#{add_zero(current_user.team.projects.size+1,4)}"
     if project.save
         flash[:notice] = "项目创建成功"
         redirect_to :action => 'index'
@@ -110,5 +112,13 @@ class ProjectsController < ApplicationController
   end
   def doc_params
       params.require(:document).permit!
+  end
+
+  def pinyin(str)
+      Pinyin.t(str) {|letters| letters[0].upcase}
+  end
+
+  def add_zero(str,length)
+      "0"*(length-str.to_s.size) + str.to_s
   end
 end

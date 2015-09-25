@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     if user && user.authenticate(params[:user][:password])
         session[:user_id] = user.id
         flash[:notice] = "登录成功！"
-        redirect_to :root
+        redirect_to :controller => 'works', :action => 'new_sheet'
     else
         flash[:error] = "用户名或密码错误！"
         render 'signin'
@@ -88,7 +88,7 @@ class UsersController < ApplicationController
 
 # 数据字典维护
 
-  def dictionaries
+  def work_sheet_dictionaries
     @wots = current_user.team.work_one_types(true).newest_first.paginate(:page => params[:page])
   end
 
@@ -101,7 +101,7 @@ class UsersController < ApplicationController
       wot.team = current_user.team
       if wot.save
           flash[:notice] = "创建成功"
-          redirect_to :action => 'dictionaries'
+          redirect_to :action => 'work_sheet_dictionaries'
       end
   end
 
@@ -109,7 +109,7 @@ class UsersController < ApplicationController
       wot = WorkOneType.find(params[:id])
       if wot.update_attributes(one_params)
           flash[:notice] = "修改成功"
-          redirect_to :action => 'dictionaries'
+          redirect_to :action => 'work_sheet_dictionaries'
       end
   end
 
@@ -117,7 +117,7 @@ class UsersController < ApplicationController
     wot = WorkOneType.find(params[:id])
     wot.destroy
     flash[:notice] = "删除成功"
-    redirect_to :action => 'dictionaries'
+    redirect_to :action => 'work_sheet_dictionaries'
   end
 
   def dictionaries_work_one_type
@@ -153,6 +153,36 @@ class UsersController < ApplicationController
   end
 
 
+  #项目类别字典
+  #project_dictionaries
+  def project_dictionaries
+    @dict = Dict.new
+    @dicts = Dict.all.order("dict_key")
+  end
+
+  def dict_create
+      dict = Dict.new(dict_params)
+      if dict.save
+          flash[:notice] = "创建成功"
+          respond_to do |format|
+            format.html {
+                redirect_to :action => 'project_dictionaries'
+            }
+          end
+      else
+          flash[:notice] = '创建失败'
+          render 'project_dictionaries'
+      end
+  end
+
+  def dict_destroy
+    dict = Dict.find(params[:id])
+    dict.destroy
+    flash[:notice] = "删除成功"
+    redirect_to :action => 'project_dictionaries'
+  end
+
+
 
 
   private
@@ -166,5 +196,9 @@ class UsersController < ApplicationController
 
   def two_params
       params.require(:wtt).permit!
+  end
+
+  def dict_params
+    params.require(:dict).permit!
   end
 end

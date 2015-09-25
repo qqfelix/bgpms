@@ -7,7 +7,7 @@
 <div class="col-sm-6">
     <div class="form-group">
         <label for="">项目级别</label>
-        <%= f.text_field :p_level, class: "form-control" %>
+        <%= f.select :p_level,Dict.where(:dict_key => "项目级别").map { |e| e.dict_value },{}, {class: "form-control"} %>
     </div>
 </div>
 <div class="col-sm-6">
@@ -82,7 +82,7 @@
 <div class="col-sm-4">
     <div class="form-group">
         <label for="">项目状态</label>
-         <%= f.text_field :p_status, class: "form-control" %>
+         <%= f.select :p_status,Dict.where(:dict_key => '项目状态').map { |e| e.dict_value },{}, {class: "form-control"} %>
     </div>
 </div>
 <div class="col-sm-12">

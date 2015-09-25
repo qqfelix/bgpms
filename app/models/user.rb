@@ -13,4 +13,15 @@ class User < ActiveRecord::Base
         order("created_at DESC")
     end
 
+    def self.empty_meetings
+        rooms = ["604大会议","604小会议","7楼会议室"]
+        Meeting.delete_all
+        puts "Meeting.delete_all"
+        rooms.each do |room|
+          m = Meeting.new
+          m.name = room
+          m.save
+        end
+    end
+
 end

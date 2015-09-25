@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150922074940) do
+ActiveRecord::Schema.define(version: 20150925042238) do
+
+  create_table "dicts", force: :cascade do |t|
+    t.string   "dict_key",   limit: 255
+    t.string   "dict_value", limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "documents", force: :cascade do |t|
     t.string   "name",             limit: 255
@@ -23,6 +30,32 @@ ActiveRecord::Schema.define(version: 20150922074940) do
     t.string   "doc_content_type", limit: 255
     t.integer  "doc_file_size",    limit: 4
     t.datetime "doc_updated_at"
+  end
+
+  create_table "meetings", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.boolean  "mon_am",      limit: 1
+    t.string   "mon_amdesc",  limit: 255
+    t.boolean  "mon_pm",      limit: 1
+    t.string   "mon_pmdesc",  limit: 255
+    t.boolean  "tues_am",     limit: 1
+    t.string   "tues_amdesc", limit: 255
+    t.boolean  "tues_pm",     limit: 1
+    t.string   "tues_pmdesc", limit: 255
+    t.boolean  "wed_am",      limit: 1
+    t.string   "wed_amdesc",  limit: 255
+    t.boolean  "wed_pm",      limit: 1
+    t.string   "wed_pmdesc",  limit: 255
+    t.boolean  "thur_am",     limit: 1
+    t.string   "thur_amdesc", limit: 255
+    t.boolean  "thur_pm",     limit: 1
+    t.string   "thur_pmdesc", limit: 255
+    t.boolean  "fri_am",      limit: 1
+    t.string   "fri_amdesc",  limit: 255
+    t.boolean  "fri_pm",      limit: 1
+    t.string   "fri_pmdesc",  limit: 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "month_reports", force: :cascade do |t|
@@ -49,7 +82,10 @@ ActiveRecord::Schema.define(version: 20150922074940) do
     t.text     "p_description", limit: 65535
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.integer  "team_id",       limit: 4
   end
+
+  add_index "projects", ["team_id"], name: "index_projects_on_team_id", using: :btree
 
   create_table "projects_users", force: :cascade do |t|
     t.integer "project_id", limit: 4
