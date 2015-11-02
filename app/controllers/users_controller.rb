@@ -10,10 +10,13 @@ class UsersController < ApplicationController
     user = User.new(user_params)
     if user.save
         flash[:notice] = "用户注册更新成功！"
+        cookies[:auth_token] = user.auth_token
         redirect_to :root
     else
         render 'signup'
     end
+
+
   end
 
 
@@ -25,7 +28,12 @@ class UsersController < ApplicationController
   def login
     user = User.find_by_name(params[:user][:name])
     if user && user.authenticate(params[:user][:password])
-        session[:user_id] = user.id
+        # session[:user_id] = user.id
+        if params[:remember_me]
+           cookies.permanent[:auth_token] = user.auth_token
+        else
+           cookies[:auth_token] = user.auth_token
+        end
         flash[:notice] = "登录成功！"
         redirect_to :controller => 'works', :action => 'new_sheet'
     else
@@ -35,7 +43,8 @@ class UsersController < ApplicationController
   end
 
   def logout
-    session[:user_id] = nil
+    # session[:user_id] = nil
+    cookies.delete(:auth_token)
     flash[:notice] = "退出成功！"
     redirect_to :root
   end
@@ -89,7 +98,7 @@ class UsersController < ApplicationController
 # 数据字典维护
 
   def work_sheet_dictionaries
-    @wots = current_user.team.work_one_types(true).newest_first.paginate(:page => params[:page])
+    @wots = WorkOneType.newest_first.paginate(:page => params[:page])
   end
 
   def one_new
@@ -98,7 +107,6 @@ class UsersController < ApplicationController
 
   def one_create
       wot = WorkOneType.new(one_params)
-      wot.team = current_user.team
       if wot.save
           flash[:notice] = "创建成功"
           redirect_to :action => 'work_sheet_dictionaries'

@@ -186,7 +186,8 @@ class ReportsController < ApplicationController
       end
 
       index_col = headers.size
-      while begin_date != end_date
+      while "#{begin_date.year}-#{begin_date.month}" != "#{end_date.year}-#{end_date.month}"
+          puts "#{begin_date.year}年#{begin_date.month}月主要工作"
           sheet.row(0).insert index_col, "#{begin_date.year}年#{begin_date.month}月主要工作"
           sheet.row(1).insert index_col, "完成工作","工作计划","存在问题及解决情况"
           (0..2).each do |i|
@@ -217,7 +218,7 @@ class ReportsController < ApplicationController
 
           index_col = headers.size
 
-          while begin_date != end_date
+          while "#{begin_date.year}-#{begin_date.month}" != "#{end_date.year}-#{end_date.month}"
               mr_content =  ""
               mr_plan = ""
               p.users.each do |user|

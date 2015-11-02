@@ -12,9 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
 //= require bootstrap
 //= require toastr
+//= require ckeditor/init
+//= require_tree .
 
-
-// turbolinks
+// turbolinks ckeditor/init

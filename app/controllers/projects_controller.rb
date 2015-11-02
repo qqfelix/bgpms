@@ -115,7 +115,7 @@ class ProjectsController < ApplicationController
   end
 
   def pinyin(str)
-      Pinyin.t(str) {|letters| letters[0].upcase}
+      Pinyin.t(str) {|letters| letters[0].upcase} if str
   end
 
   def add_zero(str,length)

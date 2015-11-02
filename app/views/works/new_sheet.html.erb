@@ -24,13 +24,13 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                       <label for="">工作类别</label>
-                      <%= f.select :work_type,['抢修','维护','工程','其它'],{},{:class => "form-control"} %>
+                      <%= f.select :work_type,Dict.where(:dict_key => '工作类别').map { |e| e.dict_value },{}, {class: "form-control"} %>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="">系统别</label>
-                        <%= f.select :work_type1,option_groups_from_collection_for_select(current_user.team.work_one_types,:work_two_types,:name,:id, :name),{}, class: "form-control" %>
+                        <%= f.select :work_type1,option_groups_from_collection_for_select(WorkOneType.all,:work_two_types,:name,:id, :name),{}, class: "form-control" %>
                     </div>
                 </div>
             </div>
@@ -65,6 +65,7 @@
                     <div class="form-group">
                         <label for="">现象描述</label>
                         <%= f.text_area :work_description,:rows => 5, class: "form-control" %>
+                        <!-- <%= f.cktext_area :work_description, :class => 'form-control', :ckeditor => {:language => 'zh'} %> -->
                     </div>
                 </div>
 
@@ -84,7 +85,7 @@
               <h3 class="panel-title">处理人</h3>
             </div>
             <div class="panel-body">
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <div class="form-group">
                         <label for="">处理人</label>
                         <!-- <%= f.select :user_id,User.all.map {|u| [u.name,u.id]},{}, class: "form-control" %> -->
@@ -93,19 +94,19 @@
 
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <div class="form-group">
                         <label for="">处理状态</label>
                         <%= f.select :work_status,['待处理','处理中'],{}, class: "form-control" %>
                     </div>
                 </div>
 
-                <div class="col-sm-4">
+                <!-- <div class="col-sm-4">
                     <div class="form-group">
                         <label for="">所属项目</label>
                         <%= f.select :project_id,current_user.projects.map {|p| [p.p_name, p.id]},{}, {class: "form-control"} %>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-sm-12">
                      <%= f.submit "提交",:class => 'btn btn-primary btn-block' %>

@@ -12,10 +12,10 @@
                   受理人
               </th>
               <th>
-                  发生地点
+                  报修人
               </th>
               <th>
-                  工作类别
+                  联系方式
               </th>
               <th>
                   处理状态
@@ -34,17 +34,16 @@
                         <%= sheet.username %>
                     </td>
                     <td>
-                        <%= sheet.work_place %>
+                        <%= sheet.work_person %>
                     </td>
                     <td>
-                        <%= sheet.work_type %>
+                        <%= sheet.work_person_phone %>
                     </td>
                     <td>
                         <%= sheet.work_status %>
                     </td>
                     <td>
-                        <%= link_to "点击进入", {:action => 'sheet_detail',:id => sheet.id } %>
-                        <%= link_to "生成周报", {:action => 'sheet_auto',:id => sheet.id } %>
+                        <%= sheet.work_content %>
 
                     </td>
                 </tr>

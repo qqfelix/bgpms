@@ -1,9 +1,10 @@
+<% if current_user.name == '刘麟' %>
 <div class="panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title">主类维护</h3>
   </div>
   <div class="panel-body">
-      <%= link_to "<< 返回", {:action => 'dictionaries'} %>
+      <%= link_to "<< 返回", {:action => 'work_sheet_dictionaries'} %>
       <h3>主类:<%= @wot.name %></h3>
       <%= form_for :wtt,:url => {:action => 'two_create',:id => @wot.id} do |f| %>
         <div class="form-group col-sm-12">
@@ -46,3 +47,8 @@
       </div>
   </div>
 </div>
+<% else %>
+  <div class="alert alert-danger">
+      非系统管理员，无权操作本页面
+  </div>
+<% end %>

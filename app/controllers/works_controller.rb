@@ -25,6 +25,10 @@ class WorksController < ApplicationController
         @work_sheets = sheets('已完成')
     end
 
+    def sheets_accepted
+      @work_sheets = WorkSheet.where(:username => current_user.name).newest_first.paginate :page => params[:page]
+    end
+
     def sheet_detail
         @work_sheet = WorkSheet.find(params[:id])
     end

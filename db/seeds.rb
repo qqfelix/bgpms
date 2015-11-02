@@ -8,20 +8,12 @@
 
 
 # 创建Team基础数据
-# teams = [
-#     "生产",
-#     "销售",
-#     "质量",
-#     "财务",
-#     "设备",
-#     "工程",
-#     "采购",
-#     "人资",
-#     "OA",
-#     "网络",
-#     "体统"
-# ]
-#
-# teams.each do |team|
-#   Team.create(:name => team)
-# end
+teams = [
+    "应用",
+    "系统",
+    "网络"
+]
+
+teams.each do |team|
+  Team.create(:name => team)
+end
