@@ -25,4 +25,8 @@ class WelcomeController < ApplicationController
       User.empty_meetings
       redirect_to :action => 'index'
   end
+
+  # layout false
+  def test
+  end
 end

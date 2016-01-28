@@ -8,10 +8,15 @@
 
 
 # 创建Team基础数据
+
+
+Team.delete_all
+
 teams = [
     "应用",
     "系统",
-    "网络"
+    "网络",
+    "管理"
 ]
 
 teams.each do |team|

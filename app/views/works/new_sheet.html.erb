@@ -65,7 +65,6 @@
                     <div class="form-group">
                         <label for="">现象描述</label>
                         <%= f.text_area :work_description,:rows => 5, class: "form-control" %>
-                        <!-- <%= f.cktext_area :work_description, :class => 'form-control', :ckeditor => {:language => 'zh'} %> -->
                     </div>
                 </div>
 
@@ -90,7 +89,19 @@
                         <label for="">处理人</label>
                         <!-- <%= f.select :user_id,User.all.map {|u| [u.name,u.id]},{}, class: "form-control" %> -->
                         <!-- <%= f.select :user_id,options_from_collection_for_select(User.all, 'id', 'name',current_user.id),{}, class: "form-control" %> -->
-                        <%= f.select :user_id,option_groups_from_collection_for_select(Team.all,:users,:name,:id, :name,current_user.id),{}, class: "form-control" %>
+                        <!-- <%= f.select :user_id,option_groups_from_collection_for_select(Team.all,:users,:name,:id, :name,current_user.id),{}, class: "form-control" %> -->
+                        <div class="ui floating dropdown labeled search icon button form-control">
+                            <input type="hidden" name="work_sheet[user_id]" value="<%= current_user.id %>">
+                            <i class="plus icon"></i>
+                            <span class="text"><%= current_user.name %></span>
+                            <div class="menu">
+                                <% User.all.each do |u| %>
+                                    <div class="item" data-value="<%= u.id %>">
+                                        <%= u.name %>
+                                    </div>
+                                <% end %>
+                            </div>
+                          </div>
 
                     </div>
                 </div>

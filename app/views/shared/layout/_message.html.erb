@@ -9,4 +9,8 @@
     <% elsif flash[:error] %>
         toastr.error("<%= flash[:error] %>");
     <% end %>
+
+    $('.ui.dropdown')
+      .dropdown()
+    ;
 </script>

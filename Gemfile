@@ -49,6 +49,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'
   gem 'rails-assets-normalize-css'
   gem 'rails-assets-toastr'
+  gem 'rails-assets-semantic'
   # gem 'rails-assets-highcharts'
 end
 
@@ -57,6 +58,6 @@ gem "paperclip", "~> 4.3"
 gem 'will_paginate', '~> 3.0.5'
 gem 'kaminari'
 gem 'chinese_pinyin'
-gem 'ckeditor'
+# gem 'ckeditor'
 gem 'imagemagick-identify', '~> 0.0.1'
 gem 'imagemagick-binaries', '~> 6.8.7.5.1'
