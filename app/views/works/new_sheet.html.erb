@@ -23,13 +23,13 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                      <label for="">工作类别</label>
-                      <%= f.select :work_type,Dict.where(:dict_key => '工作类别').map { |e| e.dict_value },{}, {class: "form-control"} %>
+                      <label for="">级别</label>
+                      <%= f.select :work_type,Dict.where(:dict_key => '级别').map { |e| e.dict_value },{}, {class: "form-control"} %>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="">系统别</label>
+                        <label for="">领域</label>
                         <%= f.select :work_type1,option_groups_from_collection_for_select(WorkOneType.all,:work_two_types,:name,:id, :name),{}, class: "form-control" %>
                     </div>
                 </div>

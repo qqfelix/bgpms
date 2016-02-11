@@ -16,3 +16,11 @@
 //= require toastr
 //= require semantic
 //= require_tree .
+
+
+$(function(){
+
+    //当前文档的高度减去footer的高度
+    var top = $(document).height()-130;
+    $("#footer").css('top',top + 'px');
+});
