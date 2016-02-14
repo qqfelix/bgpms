@@ -28,7 +28,7 @@
               <% @work_sheets.each do |sheet| %>
                 <tr>
                     <td>
-                        <%= sheet.work_datetime.strftime("%y-%m-%d") %>
+                        <%= sheet.work_datetime.strftime("%y-%m-%d %H:%M") %>
                     </td>
                     <td>
                         <%= sheet.username %>
@@ -44,8 +44,7 @@
                     </td>
                     <td>
                         <%= link_to "点击进入", {:action => 'sheet_detail',:id => sheet.id } %>
-                        <%= link_to "生成周报", {:action => 'sheet_auto',:id => sheet.id } %>
-
+                        <!-- <%= link_to "生成周报", {:action => 'sheet_auto',:id => sheet.id } %> -->
                     </td>
                 </tr>
               <% end %>

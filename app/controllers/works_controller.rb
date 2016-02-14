@@ -5,6 +5,9 @@ class WorksController < ApplicationController
 
     def create
       work_sheet = WorkSheet.new(work_sheet_params)
+      work_type = "#{Pinyin(work_sheet.work_two_type.work_one_type.name)}#{Pinyin(work_sheet.work_two_type.name)}#{DateTime.now.strftime("%y%m")}"
+      work_type_count = WorkSheet.where("classify_code like '%#{work_type}%'").size
+      work_sheet.classify_code = "#{work_type}#{add_zero(work_type_count+1,3)}"
       if work_sheet.save
           flash[:notice] = "工作单创建成功!"
           redirect_to :action => 'new_sheet'
@@ -49,6 +52,9 @@ class WorksController < ApplicationController
 
     def update
         work_sheet = WorkSheet.find(params[:id])
+
+        # params[:work_sheet][:classify_code] = "#{work_type}}";
+        # work_sheet.classify_code = "#{pinyin(current_user.team.name)}-#{pinyin(project.p_status)}-#{DateTime.now.year}-#{add_zero(current_user.team.projects.size+1,4)}"
         if work_sheet.update_attributes(work_sheet_params)
             flash[:notice] = "问题单更新成功"
             redirect_to :action => 'sheet_detail',:id => work_sheet.id

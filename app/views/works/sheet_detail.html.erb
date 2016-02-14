@@ -35,13 +35,13 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="">发生地点</label>
+                        <label for="">提出部门</label>
                         <%= f.text_field :work_place, class: "form-control",:readonly => 'readonly' %>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="">报修人</label>
+                        <label for="">提出人</label>
                         <%= f.text_field :work_person, class: "form-control",:readonly => 'readonly' %>
                     </div>
                 </div>
@@ -75,18 +75,25 @@
                 <h3 class="panel-title">处理情况</h3>
             </div>
             <div class="panel-body">
-                <div class="col-sm-6">
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                      <label for="">序号</label>
+                      <%= f.text_field :classify_code,:disabled=>'disabled', class: "form-control" %>
+                    </div>
+                </div>
+                <div class="col-sm-4">
                     <div class="form-group">
                         <label for="">处理人</label>
 <!-- <%= f.select :user_id,User.all.map {|u| [u.name,u.id]},{}, class: "form-control" %> -->
 <!-- <%= f.select :user_id,options_from_collection_for_select(User.all, 'id', 'name',current_user.id),{}, class: "form-control" %> -->
-                        <%= f.select :user_id,option_groups_from_collection_for_select(Team.all,:users,:name,:id, :name,@work_sheet.user_id),{},:disabled=>'disabled', class: "form-control" %>
+                        <%= f.select :user_id,option_groups_from_collection_for_select(Team.all,:users,:name,:id, :name,@work_sheet.user_id),{}, class: "form-control" %>
 
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="">处理状态</label>
+                        <label for="">当前状态</label>
                         <%= f.select :work_status,['已完成','待处理','处理中'],{}, class: "form-control" %>
                     </div>
                 </div>
@@ -98,40 +105,63 @@
                 </div> -->
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="">开始时间:</label>
+                        <label for="">计划完成时间:</label>
                         <%= f.datetime_select :work_benin_datetime,:use_month_numbers => true%>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label for="">结束时间:</label>
+                        <label for="">实际完成时间:</label>
                         <%= f.datetime_select :work_end_datetime,:use_month_numbers => true%>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="">级别</label>
-                        <%= f.select :work_type,Dict.where(:dict_key => '级别').map { |e| e.dict_value},{},{:class => "form-control"} %>
-                    </div>
-                </div>
-                <div class="col-sm-6">
+
+
+                <div class="col-sm-2">
                     <div class="form-group">
                         <label for="">领域</label>
                         <%= f.select :work_type1,option_groups_from_collection_for_select(WorkOneType.all,:work_two_types,:name,:id, :name,@work_sheet.work_type1),{}, class: "form-control" %>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <div class="form-group">
-                      <label for="">归类码</label>
-                      <%= f.text_field :classify_code, class: "form-control" %>
+                      <label for="">项目负责人</label>
+                      <%= f.select :work_leader,Dict.where(:dict_key => '项目负责人').map { |e| e.dict_value },{:selected => current_user.team.leader}, {class: "form-control"} %>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
                     <div class="form-group">
-                        <label for="">帐套别</label>
-                        <%= f.text_field :acc_no, class: "form-control" %>
+                      <label for="">处理状态</label>
+                      <%= f.select :work_status2,Dict.where(:dict_key => '处理状态').map { |e| e.dict_value },{}, {class: "form-control"} %>
                     </div>
                 </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="">问题类型</label>
+                      <%= f.select :work_mode,Dict.where(:dict_key => '问题类型').map { |e| e.dict_value },{}, {class: "form-control"} %>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="">级别</label>
+                        <%= f.select :work_type,Dict.where(:dict_key => '级别').map { |e| e.dict_value},{},{:class => "form-control"} %>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="">问题频率</label>
+                      <%= f.select :work_rate,Dict.where(:dict_key => '问题频率').map { |e| e.dict_value },{}, {class: "form-control"} %>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                      <label for="">修改程序个数</label>
+                      <%= f.select :program_nums,(0..10).to_a,{}, {class: "form-control"} %>
+                    </div>
+                </div>
+
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label for="">工作内容</label>

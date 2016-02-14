@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
       Pinyin.t(name) { |letters| letters[0].upcase }
   end
 
+  def add_zero(str,length)
+      "0"*(length-str.to_s.size) + str.to_s
+  end
+
 
 
 
