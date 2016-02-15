@@ -34,6 +34,17 @@ class UsersController < ApplicationController
         else
            cookies[:auth_token] = user.auth_token
         end
+
+        # client = Mongo::Client.new('mongodb://10.1.2.194:27017/pms')
+        # client[:users].insert_one({:auth_token => user.auth_token,:msg=>'',})
+        # 登陆的时候判断mongodb，如果没有则新增，如果有则不做任何操作
+
+        client = Mongo::Client.new('mongodb://10.1.2.194:27017/pms')
+        if client[:users].find(:auth_token => "#{user.auth_token}").count == 0
+            client[:users].insert_one({ auth_token: "#{user.auth_token}",msg:"",name:"#{user.name}" })
+        end
+
+
         flash[:notice] = "登录成功！"
         redirect_to :controller => 'works', :action => 'new_sheet'
     else

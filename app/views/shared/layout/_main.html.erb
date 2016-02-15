@@ -1,7 +1,7 @@
 <% if logged_in? %>
     <div class="col-sm-2">
         <div aria-multiselectable="true" class="panel-group" id="accordion" role="tablist">
-            <%= render :partial => "shared/collapse_panel", :locals => {:id => 0, :title => "问题管理", :controller => "works",:items => [{:name => "问题接受",:action => "new_sheet"},{:name => "待处理",:action => "sheets_unsolved"},
+            <%= render :partial => "shared/collapse_panel", :locals => {:id => 0, :title => "问题管理", :controller => "works",:items => [{:name => "问题接收",:action => "new_sheet"},{:name => "待处理",:action => "sheets_unsolved"},
                 {:name => "处理中",:action => "sheets_solving"},{:name => "已完成",:action => "sheets_solved"},{:name => "已受理",:action => "sheets_accepted"}]} %>
             <%= render :partial => "shared/collapse_panel", :locals => {:id => 1, :title => "工作管理", :controller => "projects",:items => [{:name => "项目管理",:action => "index"},{:name => "文档管理",:action => "documents"},{:name => "周报管理",:action => "week"},{:name => "月报管理",:action => "month"}]} %>
             <%= render :partial => "shared/collapse_panel", :locals => {:id => 2, :title => "用户管理", :controller => "users", :items => [{:name => "基本资料",:action => "edit"},{:name => "所属组",:action => "team_show"},{:name => "系统别",:action => "work_sheet_dictionaries"},{:name => "数据字典",:action => "project_dictionaries"}]} %>

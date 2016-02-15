@@ -8,6 +8,16 @@ class WorksController < ApplicationController
       work_type = "#{Pinyin(work_sheet.work_two_type.work_one_type.name)}#{Pinyin(work_sheet.work_two_type.name)}#{DateTime.now.strftime("%y%m")}"
       work_type_count = WorkSheet.where("classify_code like '%#{work_type}%'").size
       work_sheet.classify_code = "#{work_type}#{add_zero(work_type_count+1,3)}"
+
+      auth_token = ""
+      user = User.find(work_sheet.user_id)
+      if user && user.auth_token
+          auth_token = user.auth_token
+      end
+      client = Mongo::Client.new('mongodb://10.1.2.194:27017/pms')
+      client[:users].find(:auth_token => "#{auth_token}").find_one_and_update('$set' => { :msg => '您有新任务单!' })
+
+
       if work_sheet.save
           flash[:notice] = "工作单创建成功!"
           redirect_to :action => 'new_sheet'

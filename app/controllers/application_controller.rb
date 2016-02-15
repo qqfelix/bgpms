@@ -22,6 +22,10 @@ class ApplicationController < ActionController::Base
       "0"*(length-str.to_s.size) + str.to_s
   end
 
+  # def Client
+  #     client = Mongo::Client.new('mongodb://10.1.2.194:27017/pms')
+  # end
+
 
 
 

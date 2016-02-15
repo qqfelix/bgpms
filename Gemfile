@@ -61,3 +61,5 @@ gem 'chinese_pinyin'
 # gem 'ckeditor'
 gem 'imagemagick-identify', '~> 0.0.1'
 gem 'imagemagick-binaries', '~> 6.8.7.5.1'
+
+gem 'mongo', '~> 2.2', '>= 2.2.2' 
