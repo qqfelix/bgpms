@@ -23,6 +23,9 @@
               <th>
                   详细信息
               </th>
+              <th>
+                  操作
+              </th>
           </thead>
           <tbody>
               <% @work_sheets.each do |sheet| %>
@@ -44,7 +47,13 @@
                     </td>
                     <td>
                         <%= sheet.work_content %>
-
+                    </td>
+                    <td>
+                        <% if sheet.work_status == "待处理" %>
+                            <%= link_to "删除", {:action => 'destroy',:id => sheet.id}, class: "btn btn-danger", data: { confirm: '是否删除?' } %>
+                        <% else %>
+                            无权删除
+                        <% end %>
                     </td>
                 </tr>
               <% end %>

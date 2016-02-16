@@ -1,6 +1,7 @@
 class WelcomeController < ApplicationController
   def index
       @meetings = Meeting.all
+      @work_sheets = WorkSheet.all.newest_first.paginate :page => params[:page]
   end
   def edit_meetings
       @meeting = Meeting.find(params[:id])
@@ -28,5 +29,9 @@ class WelcomeController < ApplicationController
 
   # layout false
   def test
+  end
+
+  def self.newest_first
+      order("created_at DESC")
   end
 end

@@ -1,159 +1,66 @@
-<!-- <div class="panel panel-primary">
+<div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title">会议室预定</h3>
+    <h3 class="panel-title">所有问题</h3>
   </div>
   <div class="panel-body">
-      <table class="table table-striped table-bordered table-hover">
-
-        <tr>
-          <td>
-            会议室
-          </td>
-          <td>
-            时间
-          </td>
-          <td>
-            星期一
-          </td>
-          <td>
-            星期二
-          </td>
-          <td>
-            星期三
-          </td>
-          <td>
-            星期四
-          </td>
-          <td>
-            星期五
-          </td>
-        </tr>
-
-        <% @meetings.each do |meeting| %>
-            <tr>
-              <td rowspan="2">
-                <%= meeting.name %><br>
-                <%= link_to '预定',
-                            {:action => 'edit_meetings',:id=>meeting.id}, :class => 'btn btn-primary' %>
-
-              </td>
-              <td>
-                上午
-              </td>
-              <td>
-                <%= check_box_tag :mon_am,meeting.mon_am,meeting.mon_am,:disabled => true %>&nbsp;
-                <%= meeting.mon_amdesc %>
-              </td>
-              <td>
-                <%= check_box_tag :tues_am,meeting.tues_am,meeting.tues_am,:disabled => true %>&nbsp;
-                <%= meeting.tues_amdesc %>
-              </td>
-              <td>
-                <%= check_box_tag :wed_am,meeting.wed_am,meeting.wed_am,:disabled => true %>&nbsp;
-                <%= meeting.wed_amdesc %>
-              </td>
-              <td>
-                <%= check_box_tag :thur,meeting.thur_am,meeting.thur_am,:disabled => true %>&nbsp;
-                <%= meeting.thur_amdesc %>
-              </td>
-              <td>
-                <%= check_box_tag :fri_am,meeting.fri_am,meeting.fri_am,:disabled => true %>&nbsp;
-                <%= meeting.fri_amdesc %>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                下午
-              </td>
-              <td>
-                <%= check_box_tag :mon_pm,meeting.mon_pm,meeting.mon_pm,:disabled => true %>&nbsp;
-                <%= meeting.mon_pmdesc %>
-              </td>
-              <td>
-                <%= check_box_tag :tues_pm,meeting.tues_pm,meeting.tues_pm,:disabled => true %>&nbsp;
-                <%= meeting.tues_pmdesc %>
-              </td>
-              <td>
-                <%= check_box_tag :wed_pm,meeting.wed_pm,meeting.wed_pm,:disabled => true %>&nbsp;
-                <%= meeting.wed_pmdesc %>
-              </td>
-              <td>
-                <%= check_box_tag :thur,meeting.thur_pm,meeting.thur_pm,:disabled => true %>&nbsp;
-                <%= meeting.thur_pmdesc %>
-              </td>
-              <td>
-                <%= check_box_tag :fri_pm,meeting.fri_pm,meeting.fri_pm,:disabled => true %>&nbsp;
-                <%= meeting.fri_pmdesc %>
-              </td>
-            </tr>
-
-        <% end %>
-
+      <table class="table">
+          <thead>
+              <th>
+                  日期
+              </th>
+              <th>
+                  受理人
+              </th>
+              <th>
+                  处理人
+              </th>
+              <th>
+                  发生地点
+              </th>
+              <th>
+                  工作类别
+              </th>
+              <th>
+                  处理状态
+              </th>
+              <th>
+                  问题描述
+              </th>
+              <th>
+                  处理结果
+              </th>
+          </thead>
+          <tbody>
+              <% @work_sheets.each do |sheet| %>
+                <tr>
+                    <td style="width:11%">
+                        <%= sheet.work_datetime.strftime("%y-%m-%d %H:%M") %>
+                    </td>
+                    <td style="width:6%">
+                        <%= sheet.username %>
+                    </td>
+                    <td style="width:6%">
+                        <%= sheet.user.name%>
+                    </td>
+                    <td style="width:7%">
+                        <%= sheet.work_place %>
+                    </td>
+                    <td style="width:7%">
+                        <%= sheet.work_type %>
+                    </td>
+                    <td style="width:7%">
+                        <%= sheet.work_status %>
+                    </td>
+                    <td style="width:28%">
+                        <%= sheet.work_description %>
+                    </td>
+                    <td>
+                        <%= sheet.work_content %>
+                    </td>
+                </tr>
+              <% end %>
+          </tbody>
       </table>
+      <%= will_paginate @work_sheets,:previous_label => "上一页",:next_label => "下一页" %>
   </div>
-</div> -->
-
-<!-- <div class="panel panel-primary">
-  <div class="panel-heading">
-    <h3 class="panel-title">问题单</h3>
-  </div>
-  <div class="panel-body">
-      <div class="ui divided items">
-        <div class="item">
-          <div class="image">
-            <img src="assets/image.png">
-          </div>
-          <div class="content">
-            <a class="header">12 Years a Slave</a>
-            <div class="meta">
-              <span class="cinema">Union Square 14</span>
-            </div>
-            <div class="description">
-              <p>
-                  this is a description
-              </p>
-            </div>
-            <div class="extra">
-              <div class="ui label">IMAX</div>
-              <div class="ui label"><i class="globe icon"></i> Additional Languages</div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="image">
-            <img src="assets/image.png">
-          </div>
-          <div class="content">
-            <a class="header">My Neighbor Totoro</a>
-            <div class="meta">
-              <span class="cinema">IFC Cinema</span>
-            </div>
-            <div class="description">
-              <p></p>
-            </div>
-            <div class="extra">
-              <div class="ui right floated primary button">Buy tickets <i class="right chevron icon"></i> </div>
-              <div class="ui label">Limited</div>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="image">
-            <img src="assets/image.png">
-          </div>
-          <div class="content">
-            <a class="header">Watchmen</a>
-            <div class="meta">
-              <span class="cinema">IFC</span>
-            </div>
-            <div class="description">
-              <p></p>
-            </div>
-            <div class="extra">
-              <div class="ui right floated primary button">Buy tickets <i class="right chevron icon"></i> </div>
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
-</div> -->
+</div>

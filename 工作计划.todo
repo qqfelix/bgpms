@@ -24,9 +24,17 @@
 ✔   修改首页footer为自适应模式 @done(2016-01-28 15:19)
     通过判断document和container的高度，动态设定footer的top值
 ✔   根据模板内容完成基本功能 @done(2016-02-14 14:52)
-☐   添加Mongodb连接方式，实现消息提醒功能
+✔   添加Mongodb连接方式，实现消息提醒功能 @done(2016-02-15 15:58)
 ☐   添加程序自动更新功能
-
+✔   删除底部footer @done(2016-02-15 16:13)
+✔   添加已授权删除按钮 @done(2016-02-15 16:13)
+✔   添加转发Mongodb小心新增 @done(2016-02-15 16:19)
+✔   将所有用户添加到mongodb中 @done(2016-02-15 16:28)
+    User.all.each do |user|
+        if client[:users].find(:auth_token => "#{user.auth_token}").count == 0
+            client[:users].insert_one({ auth_token: "#{user.auth_token}",msg:"",name:"#{user.name}" })
+        end
+    end
 
 
 
@@ -41,3 +49,5 @@
 4. 资料维护
 
 如使用360浏览器，请开启急速模式（ie9+），欢迎大家试用，如有问题请反馈给我，稍后我会继续不断更新完善
+
+问题单系统目前已基本完成，大家使用，可以用浏览器登录10
