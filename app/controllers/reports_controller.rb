@@ -32,13 +32,13 @@ class ReportsController < ApplicationController
       p_begin_date = "#{params['date']['p_begin_date(1i)']}-#{params['date']['p_begin_date(2i)']}-#{params['date']['p_begin_date(3i)']}".to_datetime
       p_end_date = "#{params['date']['p_end_date(1i)']}-#{params['date']['p_end_date(2i)']}-#{params['date']['p_end_date(3i)']}".to_datetime
 
-      download(params[:type],p_begin_date,p_end_date)
+      download(params[:type],p_begin_date,p_end_date,params['all'])
 
   end
 
-  def download(type,p_begin_date,p_end_date)
+  def download(type,p_begin_date,p_end_date,all)
     if type == "问题单下载"
-        worksheets_download(p_begin_date,p_end_date)
+        worksheets_download(p_begin_date,p_end_date,all)
     elsif type == "周报下载"
         week_download(p_begin_date,p_end_date)
     elsif type == "月报下载"
@@ -46,11 +46,16 @@ class ReportsController < ApplicationController
     end
   end
 
-  def worksheets_download(p_begin_date,p_end_date)
+  def worksheets_download(p_begin_date,p_end_date,all)
     begin_date = p_begin_date
     end_date   = p_end_date
 
-    @work_sheets = WorkSheet.where("created_at between '#{begin_date}' and '#{end_date}'")
+    if all == "个人"
+        @work_sheets = current_user.work_sheets
+    else
+        @work_sheets = WorkSheet.where("created_at between '#{begin_date}' and '#{end_date}'")
+    end
+
     file_contents = StringIO.new
     book = Spreadsheet::Workbook.new
     sheet = book.create_worksheet

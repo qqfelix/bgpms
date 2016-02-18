@@ -52,10 +52,10 @@
                         <%= sheet.work_status %>
                     </td>
                     <td style="width:28%">
-                        <%= sheet.work_description %>
+                        <%= truncate sheet.work_description, length: 100 %>
                     </td>
                     <td>
-                        <%= sheet.work_content %>
+                        <%= truncate sheet.work_content, length: 100 %>
                     </td>
                 </tr>
               <% end %>

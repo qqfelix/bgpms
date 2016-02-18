@@ -5,7 +5,12 @@ class WorksController < ApplicationController
 
     def create
       work_sheet = WorkSheet.new(work_sheet_params)
-      work_type = "#{Pinyin(work_sheet.work_two_type.work_one_type.name)}#{Pinyin(work_sheet.work_two_type.name)}#{DateTime.now.strftime("%y%m")}"
+      type1 =  work_sheet.work_two_type.work_one_type.name
+      if type1 == "设备工程"
+          type1 = "工程"
+      end
+
+      work_type = "#{Pinyin(type1)}#{Pinyin(work_sheet.work_two_type.name)}#{DateTime.now.strftime("%y%m")}"
       work_type_count = WorkSheet.where("classify_code like '%#{work_type}%'").size
       work_sheet.classify_code = "#{work_type}#{add_zero(work_type_count+1,3)}"
 
@@ -14,9 +19,11 @@ class WorksController < ApplicationController
       if user && user.auth_token
           auth_token = user.auth_token
       end
-      client = Mongo::Client.new('mongodb://10.1.2.194:27017/pms')
-      client[:users].find(:auth_token => "#{auth_token}").find_one_and_update('$set' => { :msg => '您有新任务单!' })
 
+      if work_sheet.work_status != "已完成"
+          client = Mongo::Client.new('mongodb://10.1.2.194:27017/pms')
+          client[:users].find(:auth_token => "#{auth_token}").find_one_and_update('$set' => { :msg => '您有新任务单!' })
+      end
 
       if work_sheet.save
           flash[:notice] = "工作单创建成功!"

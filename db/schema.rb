@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160214063434) do
+ActiveRecord::Schema.define(version: 20160217074529) do
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string   "data_file_name",    limit: 255, null: false
@@ -157,15 +157,15 @@ ActiveRecord::Schema.define(version: 20160214063434) do
     t.string   "work_place",          limit: 255
     t.string   "work_person",         limit: 255
     t.string   "work_person_phone",   limit: 255
-    t.string   "work_description",    limit: 255
+    t.text     "work_description",    limit: 4294967295
     t.string   "work_demand",         limit: 255
     t.datetime "work_benin_datetime"
     t.datetime "work_end_datetime"
     t.integer  "user_id",             limit: 4
     t.string   "work_content",        limit: 255
     t.string   "work_status",         limit: 255
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.integer  "project_id",          limit: 4
     t.string   "classify_code",       limit: 255
     t.string   "acc_no",              limit: 255

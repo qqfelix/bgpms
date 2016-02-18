@@ -80,6 +80,75 @@
           </div>
 
           <div class="panel panel-default">
+              <div class="panel-heading">
+                  <h3 class="panel-title">处理情况</h3>
+              </div>
+              <div class="panel-body">
+
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                          <label for="">计划完成时间:</label>
+                          <%= f.datetime_select :work_benin_datetime,:use_month_numbers => true%>
+                      </div>
+                  </div>
+                  <div class="col-sm-6">
+                      <div class="form-group">
+                          <label for="">实际完成时间:</label>
+                          <%= f.datetime_select :work_end_datetime,:use_month_numbers => true%>
+                      </div>
+                  </div>
+
+                  <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="">项目负责人</label>
+                        <%= f.select :work_leader,Dict.where(:dict_key => '项目负责人').map { |e| e.dict_value },{:selected => current_user.team.leader}, {class: "form-control"} %>
+                      </div>
+                  </div>
+                  <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="">处理状态</label>
+                        <%= f.select :work_status2,Dict.where(:dict_key => '处理状态').map { |e| e.dict_value },{}, {class: "form-control"} %>
+                      </div>
+                  </div>
+                  <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="">问题类型</label>
+                        <%= f.select :work_mode,Dict.where(:dict_key => '问题类型').map { |e| e.dict_value },{}, {class: "form-control"} %>
+                      </div>
+                  </div>
+                  <div class="col-sm-2">
+                      <div class="form-group">
+                          <label for="">级别</label>
+                          <%= f.select :work_type,Dict.where(:dict_key => '级别').map { |e| e.dict_value},{},{:class => "form-control"} %>
+                      </div>
+                  </div>
+
+
+                  <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="">问题频率</label>
+                        <%= f.select :work_rate,Dict.where(:dict_key => '问题频率').map { |e| e.dict_value },{}, {class: "form-control"} %>
+                      </div>
+                  </div>
+                  <div class="col-sm-2">
+                      <div class="form-group">
+                        <label for="">修改程序个数</label>
+                        <%= f.select :program_nums,(0..10).to_a,{}, {class: "form-control"} %>
+                      </div>
+                  </div>
+
+                  <div class="col-sm-12">
+                      <div class="form-group">
+                          <label for="">工作内容</label>
+                          <%= f.text_area :work_content,:rows => 5, class: "form-control" %>
+                      </div>
+                  </div>
+
+              </div>
+
+          </div>
+
+          <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">处理人</h3>
             </div>
