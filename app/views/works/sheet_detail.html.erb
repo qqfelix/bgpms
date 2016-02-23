@@ -18,51 +18,51 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="">受理人</label>
-                        <%= f.text_field :username, :value => @work_sheet.username,:readonly => 'readonly', :class => 'form-control' %>
+                        <%= f.text_field :username, :value => @work_sheet.username, :class => 'form-control' %>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="">级别</label>
-                        <%= f.select :work_type,Dict.where(:dict_key => '级别').map { |e| e.dict_value },{},{:readonly => 'readonly',:class => "form-control"} %>
+                        <%= f.select :work_type,Dict.where(:dict_key => '级别').map { |e| e.dict_value },{},{:class => "form-control"} %>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="">领域</label>
-                        <%= f.select :work_type1,option_groups_from_collection_for_select(WorkOneType.all,:work_two_types,:name,:id, :name,@work_sheet.work_type1),{}, class: "form-control",:readonly => 'readonly' %>
+                        <%= f.select :work_type1,option_groups_from_collection_for_select(WorkOneType.all,:work_two_types,:name,:id, :name,@work_sheet.work_type1),{}, class: "form-control" %>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="">提出部门</label>
-                        <%= f.text_field :work_place, class: "form-control",:readonly => 'readonly' %>
+                        <%= f.text_field :work_place, class: "form-control" %>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="">提出人</label>
-                        <%= f.text_field :work_person, class: "form-control",:readonly => 'readonly' %>
+                        <%= f.text_field :work_person, class: "form-control" %>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="">保修电话</label>
-                        <%= f.text_field :work_person_phone, class: "form-control",:readonly => 'readonly' %>
+                        <%= f.text_field :work_person_phone, class: "form-control" %>
                     </div>
                 </div>
 
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label for="">现象描述</label>
-                        <%= f.text_area :work_description,:rows => 5, class: "form-control",:readonly => 'readonly' %>
+                        <%= f.text_area :work_description,:rows => 5, class: "form-control" %>
                     </div>
                 </div>
 
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label for="">用户要求</label>
-                        <%= f.text_area :work_demand,:rows => 5, class: "form-control",:readonly => 'readonly' %>
+                        <%= f.text_area :work_demand,:rows => 5, class: "form-control" %>
                     </div>
                 </div>
             </div>
@@ -126,7 +126,7 @@
                 <div class="col-sm-2">
                     <div class="form-group">
                       <label for="">项目负责人</label>
-                      <%= f.select :work_leader,Dict.where(:dict_key => '项目负责人').map { |e| e.dict_value },{:selected => current_user.team.leader}, {class: "form-control"} %>
+                      <%= f.select :work_leader,Dict.where(:dict_key => '项目负责人').map { |e| e.dict_value },{}, {class: "form-control"} %>
                     </div>
                 </div>
                 <div class="col-sm-2">

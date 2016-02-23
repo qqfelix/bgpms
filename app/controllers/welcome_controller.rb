@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController
   def index
       @meetings = Meeting.all
-      @work_sheets = WorkSheet.all.order("work_datetime desc").paginate :page => params[:page]
+      @work_sheets = WorkSheet.order("work_datetime desc").paginate :page => params[:page], :per_page => 10, :total_entries => 100
   end
   def edit_meetings
       @meeting = Meeting.find(params[:id])

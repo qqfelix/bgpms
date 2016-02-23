@@ -39,6 +39,8 @@ class ReportsController < ApplicationController
   def download(type,p_begin_date,p_end_date,all)
     if type == "问题单下载"
         worksheets_download(p_begin_date,p_end_date,all)
+    elsif type == "问题分析下载"
+        worksheets_fenxi_download(p_begin_date,p_end_date)
     elsif type == "周报下载"
         week_download(p_begin_date,p_end_date)
     elsif type == "月报下载"
@@ -62,6 +64,7 @@ class ReportsController < ApplicationController
     sheet.name = "问题单"
     sheet.row(0).push "领域","项目负责人","问题处理人","处理状态","问题类型","问题级别","序号",
     "问题描述","问题频率","提出部门","问题分析及处理意见","修改程序个数","计划完成日期","实际完成日期"
+
     # sheet.row(0).push "受理时间","受理人","工作类别","主类别","子类别","发生地点","报修人",
     # "保修电话","现象描述","用户需求","开始时间","结束时间","处理人","处理内容","处理状态"
     header_format = Spreadsheet::Format.new :color => :blue,
@@ -106,6 +109,100 @@ class ReportsController < ApplicationController
 
         sheet.row(index+1).default_format = content_format
     end
+
+    file_name = "sheet#{begin_date.strftime('%y%m%d')}-#{end_date.strftime('%y%m%d')}.xls"
+    user_agent = request.user_agent.downcase
+    escaped_file_name = user_agent.include?("msie") ? CGI::escape(file_name) : file_name
+
+    book.write file_contents
+    send_data file_contents.string.force_encoding('binary'),:type=>"application/xls;charset=utf-8", filename: escaped_file_name
+
+  end
+
+  def worksheets_fenxi_download(p_begin_date,p_end_date)
+    begin_date = p_begin_date
+    end_date   = p_end_date
+
+
+    file_contents = StringIO.new
+    book = Spreadsheet::Workbook.new
+    sheet = book.create_worksheet
+    sheet.name = "问题分析下载"
+    sheet.merge_cells(0,0,1,0);
+    sheet.merge_cells(0,1,1,1);
+    sheet.merge_cells(0,2,0,6);
+    sheet.merge_cells(0,7,0,14);
+    sheet.merge_cells(0,26,0,28);
+    sheet.row(1).push "领域","问题总数","A已结案","B已完成","C处理中","D方案研讨中","E已反馈",
+    "A1数据下载","A2请示报告","A3问题协调","A4业务授权","A5业务咨询","A6修改数据","A7删除数据",
+    "A8导入数据","B系统问题","C系统优化","D需求新增","E操作问题","F接口修改","G处内协调","H报表新增",
+    "I电源","J设备故障","K网络","J其它","A紧急","B重要","C普通"
+    sheet.row(0).insert 0,'领域'
+    sheet.row(0).insert 1,'问题总数'
+    sheet.row(0).insert 2,'完成情况'
+    sheet.row(0).insert 7,'业务问题'
+    sheet.row(0).insert 26,'业务问题'
+
+    header_format = Spreadsheet::Format.new :color => :blue,
+                                 :weight => :bold,
+                                 :size => 16,:text_wrap => true,:horizontal_align => :center,:vertical_align => :middle
+    content_format = Spreadsheet::Format.new :size => 14,:text_wrap => true,:horizontal_align => :center,
+                                     :vertical_align => :top
+    sheet.row(0).default_format = header_format
+    sheet.row(1).default_format = header_format
+    (0..29).each do |i|
+      sheet.column(i).width = 7
+    end
+    WorkOneType.all.each_with_index do |type,index|
+        ws = type.work_sheets.where("work_sheets.created_at between '#{begin_date}' and '#{end_date}'")
+        sheet.row(index+2).push type.name,
+                                ws.count, ws.where(:work_status2 => 'A已结案').count,
+                                ws.where(:work_status2 => 'B已完成').count,
+                                ws.where(:work_status2 => 'C处理中').count,
+                                ws.where(:work_status2 => 'D方案研讨中').count,
+                                ws.where(:work_status2 => 'E已反馈').count,
+                                ws.where(:work_mode => 'A1数据下载').count,
+                                ws.where(:work_mode => 'A2请示报告').count,
+                                ws.where(:work_mode => 'A3问题协调').count,
+                                ws.where(:work_mode => 'A4业务授权').count,
+                                ws.where(:work_mode => 'A5业务咨询').count,
+                                ws.where(:work_mode => 'A6修改数据').count,
+                                ws.where(:work_mode => 'A7删除数据').count,
+                                ws.where(:work_mode => 'A8导入数据').count,
+                                ws.where(:work_mode => 'B系统问题').count,
+                                ws.where(:work_mode => 'C系统优化').count,
+                                ws.where(:work_mode => 'D需求新增').count,
+                                ws.where(:work_mode => 'E操作问题').count,
+                                ws.where(:work_mode => 'F接口修改').count,
+                                ws.where(:work_mode => 'G处内协调').count,
+                                ws.where(:work_mode => 'H报表新增').count,
+                                ws.where(:work_mode => 'I电源').count,
+                                ws.where(:work_mode => 'J设备故障').count,
+                                ws.where(:work_mode => 'K网络').count,
+                                ws.where(:work_mode => 'Z其它').count,
+                                ws.where(:work_rate => 'A频繁').count,
+                                ws.where(:work_rate => 'B经常').count,
+                                ws.where(:work_rate => 'C很少').count
+
+    end
+    # @work_sheets.each_with_index do |work_sheet, index|
+    #     sheet.row(index+1).push work_sheet.work_two_type.work_one_type.name,
+    #                             work_sheet.work_leader,
+    #                             work_sheet.username,
+    #                             work_sheet.work_status2,
+    #                             work_sheet.work_mode,
+    #                             work_sheet.work_type,
+    #                             work_sheet.classify_code,
+    #                             work_sheet.work_description,
+    #                             work_sheet.work_rate,
+    #                             work_sheet.work_place,
+    #                             work_sheet.work_content,
+    #                             work_sheet.program_nums,
+    #                             work_sheet.work_benin_datetime ? work_sheet.work_benin_datetime.strftime("%y-%m-%d") : "",
+    #                             work_sheet.work_end_datetime ? work_sheet.work_end_datetime.strftime("%y-%m-%d") : "",
+    #                   work_sheet.work_status
+    #     sheet.row(index+1).default_format = content_format
+    # end
 
     file_name = "sheet#{begin_date.strftime('%y%m%d')}-#{end_date.strftime('%y%m%d')}.xls"
     user_agent = request.user_agent.downcase

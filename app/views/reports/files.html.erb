@@ -20,7 +20,7 @@
             <%= select_tag :all,options_for_select(["个人","所有"]),:class => 'form-control' %>
         </div>
         <div class="col-sm-3">
-            <%= select_tag :type,options_for_select(["问题单下载"]),:class => 'form-control' %>
+            <%= select_tag :type,options_for_select(["问题单下载",'问题分析下载']),:class => 'form-control' %>
         </div>
         <div class="col-sm-3">
             <%= submit_tag "下载", class: "btn btn-primary btn-block",:onclick => "showMsg('文件下载中')" %>
