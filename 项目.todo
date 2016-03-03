@@ -1,2 +1,17 @@
 项目开发工作计划
 ☐ 项目创建，根据不同状态维护不同的基本信息
+
+
+
+
+websphere控制信息
+https://10.1.4.123:9043/ibm/console/logon.jsp
+http://10.1.4.21:9090/admin/secure/logon.do
+http://10.1.11.21:9090/admin/secure/logon.do
+http://10.1.11.21:9090/admin/secure/logon.do
+https://10.1.5.21:9043/ibm/console/secure/securelogon.do
+
+F5
+https://10.1.10.10/tmui/Control/jspmap/tmui/locallb/virtual_server/list.jsp?Filter=*
+https://10.1.0.10/xui/
+https://10.1.0.20/tmui/Control/jspmap/tmui/locallb/pool/resources.jsp?name=pool_MES
