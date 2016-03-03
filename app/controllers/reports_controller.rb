@@ -63,7 +63,7 @@ class ReportsController < ApplicationController
     sheet = book.create_worksheet
     sheet.name = "问题单"
     sheet.row(0).push "领域","项目负责人","问题处理人","处理状态","问题类型","问题级别","序号",
-    "问题描述","问题频率","提出部门","问题分析及处理意见","修改程序个数","计划完成日期","实际完成日期"
+    "问题描述","问题频率","提出部门","问题分析及处理意见","修改程序个数","计划完成日期","实际完成日期","问题受理人"
 
     # sheet.row(0).push "受理时间","受理人","工作类别","主类别","子类别","发生地点","报修人",
     # "保修电话","现象描述","用户需求","开始时间","结束时间","处理人","处理内容","处理状态"
@@ -79,7 +79,7 @@ class ReportsController < ApplicationController
     @work_sheets.each_with_index do |work_sheet, index|
         sheet.row(index+1).push work_sheet.work_two_type.work_one_type.name,
                                 work_sheet.work_leader,
-                                work_sheet.username,
+                                work_sheet.user.name,
                                 work_sheet.work_status2,
                                 work_sheet.work_mode,
                                 work_sheet.work_type,
@@ -91,6 +91,7 @@ class ReportsController < ApplicationController
                                 work_sheet.program_nums,
                                 work_sheet.work_benin_datetime ? work_sheet.work_benin_datetime.strftime("%y-%m-%d") : "",
                                 work_sheet.work_end_datetime ? work_sheet.work_end_datetime.strftime("%y-%m-%d") : "",
+                                work_sheet.username
         # sheet.row(index+1).push work_sheet.work_datetime.strftime("%y-%m-%d"),
         #                         work_sheet.username,
         #                         work_sheet.work_type,
@@ -107,7 +108,7 @@ class ReportsController < ApplicationController
         #                         work_sheet.work_content,
         #                         work_sheet.work_status
 
-        sheet.row(index+1).default_format = content_format
+        # sheet.row(index+1).default_format = content_format
     end
 
     file_name = "sheet#{begin_date.strftime('%y%m%d')}-#{end_date.strftime('%y%m%d')}.xls"

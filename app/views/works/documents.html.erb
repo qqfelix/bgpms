@@ -1,0 +1,59 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">文档管理</h3>
+  </div>
+  <div class="panel-body">
+      <%= form_for :document,:url => { :action => 'document_create'} do |f| %>
+          <div class="col-sm-4">
+              <div class="form-group">
+                  <label for="">名称</label>
+                  <%= f.text_field :name, class: "form-control" %>
+              </div>
+          </div>
+          <div class="col-sm-4">
+              <div class="form-group">
+                  <label for="">选择文件</label>
+                  <%= f.file_field :doc, class: "form-control" %>
+              </div>
+          </div>
+          <div class="col-sm-4">
+              <div class="form-group">
+                  <label for="">项目</label>
+                  <%= f.select :project_id,current_user.projects.map {|p| [p.p_name, p.id]},{}, {class: "form-control"} %>
+              </div>
+              <div class="form-group">
+                  <%= f.submit "提交", class: "btn btn-primary btn-block" %>
+              </div>
+          </div>
+     <% end %>
+     <table class="table">
+         <thead>
+             <th>
+                 文档名称
+             </th>
+             <th>
+                 项目
+             </th>
+             <th>
+                 文档
+             </th>
+         </thead>
+         <tbody>
+             <% @documents.each do |document| %>
+               <tr>
+                   <td>
+                       <%= document.name %>
+                   </td>
+                   <td>
+                       <%= document.project.p_name %>
+                   </td>
+                   <td>
+                       <%= link_to "查看", document.doc.url, class: "btn btn-primary" %>
+                   </td>
+               </tr>
+             <% end %>
+         </tbody>
+     </table>
+     <%= will_paginate @documents,:previous_label => "上一页",:next_label => "下一页" %>
+  </div>
+</div>

@@ -100,6 +100,24 @@ class ProjectsController < ApplicationController
   end
 
 
+  # 项目控制器维护
+  def keyan
+      @projects = current_user.my_projects.newest_first.paginate(:page => params[:page])
+  end
+
+  def lianhe
+  end
+
+  def zizhu
+  end
+
+  def wancheng
+  end
+
+  def yunwei
+  end
+
+
   private
   def project_params
       params.require(:project).permit!
@@ -118,5 +136,5 @@ class ProjectsController < ApplicationController
       Pinyin.t(str) {|letters| letters[0].upcase} if str
   end
 
-  
+
 end

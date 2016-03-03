@@ -1,0 +1,49 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">项目管理</h3>
+  </div>
+  <div class="panel-body">
+      <%= link_to "新增项目", {:action => 'project_new'}, class: "btn btn-primary" %>
+      <table class="table">
+        <thead>
+            <th>
+                项目级别
+            </th>
+            <th>
+                项目负责人
+            </th>
+            <th>
+                项目名称
+            </th>
+            <th>
+                项目状态
+            </th>
+            <th>
+                操作
+            </th>
+        </thead>
+        <tbody>
+            <% @projects.each do |project| %>
+              <tr>
+                  <td>
+                      <%= project.p_level %>
+                  </td>
+                  <td>
+                      <%= project.user.name %>
+                  </td>
+                  <td>
+                      <%= project.p_name %>
+                  </td>
+                  <td>
+                      <%= project.p_status %>
+                  </td>
+                  <td>
+                      <%= link_to "修改", {:action => 'project_edit' , :id => project.id}, class: "btn btn-primary" %>
+                  </td>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>
+      <%= will_paginate @projects,:previous_label => "上一页",:next_label => "下一页" %>
+  </div>
+</div>
