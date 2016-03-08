@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
     has_secure_password
-
+    
     belongs_to :team
     has_many :work_sheets
     has_many :my_projects,:foreign_key => "p_author",:class_name => "Project"

@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
 
         flash[:notice] = "登录成功！"
-        redirect_to :controller => 'works', :action => 'new_sheet'
+        redirect_to :controller => 'sheets', :action => 'new_sheet'
     else
         flash[:error] = "用户名或密码错误！"
         render 'signin'

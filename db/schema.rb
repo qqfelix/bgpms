@@ -11,23 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217074529) do
-
-  create_table "ckeditor_assets", force: :cascade do |t|
-    t.string   "data_file_name",    limit: 255, null: false
-    t.string   "data_content_type", limit: 255
-    t.integer  "data_file_size",    limit: 4
-    t.integer  "assetable_id",      limit: 4
-    t.string   "assetable_type",    limit: 30
-    t.string   "type",              limit: 30
-    t.integer  "width",             limit: 4
-    t.integer  "height",            limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
+ActiveRecord::Schema.define(version: 20160307082604) do
 
   create_table "dicts", force: :cascade do |t|
     t.string   "dict_key",   limit: 255
@@ -158,7 +142,7 @@ ActiveRecord::Schema.define(version: 20160217074529) do
     t.string   "work_person",         limit: 255
     t.string   "work_person_phone",   limit: 255
     t.text     "work_description",    limit: 4294967295
-    t.string   "work_demand",         limit: 255
+    t.text     "work_demand",         limit: 4294967295
     t.datetime "work_benin_datetime"
     t.datetime "work_end_datetime"
     t.integer  "user_id",             limit: 4
